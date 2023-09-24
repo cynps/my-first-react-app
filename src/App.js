@@ -28,6 +28,13 @@ function calculateWinner(squares) {
   return null;
 }
 
+/**
+ * 各パラメータは Game から渡される
+ * @param { xIsNext } Game.xIsNext
+ * @param { squares } Game.currentSquares
+ * @param { onPlay } Game.handlePlay(nextSquares)
+ * @returns 
+ */
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) return;
@@ -38,6 +45,7 @@ function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[i] = "O";
     }
+    // handlePlay の引数はここで設定される
     onPlay(nextSquares);
   }
 
@@ -77,6 +85,9 @@ export default function Game() {
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
+  /**
+   * @param { nextSquares } Board.handleClick の onPlay で設定される 
+   */
   function handlePlay(nextSquares) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
